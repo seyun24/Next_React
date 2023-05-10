@@ -1,15 +1,28 @@
 import * as React from "react";
-import {useInput} from "@test/pages/test/useInput";
+import { useTestStore} from "./useTestStore";
 
 function SearchBar() {
-    const [inputValue, handleChange] = useInput('hi');
-    const [inputValue2, handleChange2] = useInput('hello');
-    return <>
-        <input value={inputValue} onChange={handleChange}/>
-        <div>{inputValue}</div>
-        <input value={inputValue2} onChange={handleChange2}/>
-        <div>{inputValue2}</div>
-    </>
+    const { listData, callListApi } = useTestStore();
+
+    // React.useEffect(() => {
+    //     callListApi();
+    // }, [callListApi]);
+
+    const handleClick = () => {
+        callListApi();
+    };
+    return (
+        <div>
+            <button onClick={handleClick}>Load List Data</button>
+            {listData.map((item, index) => (
+                <div key={index}>
+                    <p>id: {item.id}</p>
+                    <p>Email: {item.email}</p>
+                    <p>Name: {item.name}</p>
+                </div>
+            ))}
+        </div>
+    );
 }
 
 export {SearchBar}
